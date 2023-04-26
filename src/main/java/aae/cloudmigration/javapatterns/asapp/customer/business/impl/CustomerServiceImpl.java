@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private static final Logger LOGGER = LogManager.getLogger(CustomerServiceImpl.class);
 	private final CustomerRepository customerRepository;
 
-	@Value("${webapi.codename}")
+	@Value("${codeName}")
 	private String projectCodeName;
 
 	@Autowired
