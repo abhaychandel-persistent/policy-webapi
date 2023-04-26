@@ -35,6 +35,7 @@ public class CustomerRestController implements CustomerRestService {
 
 	@Override
 	public ResponseEntity<List<CustomerDto>> getCustomerList() {
+		LOGGER.info("Request received for getting customer list");
 		return ResponseEntity.ok(customerService.getCustomerList());
 	}
 

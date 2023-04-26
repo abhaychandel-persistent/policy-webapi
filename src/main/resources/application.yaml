@@ -11,3 +11,7 @@ spring:
             profile:
               tenant-id: 1972f4ea-4dbc-4475-8204-536e6cd8a3ec
             endpoint: https://appservice-webapi-vault.vault.azure.net/
+
+azure:
+  application-insights:
+    instrumentation-key: ${appInsightInstrumentationKey}
