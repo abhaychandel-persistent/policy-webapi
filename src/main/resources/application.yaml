@@ -6,8 +6,8 @@ spring:
           property-source-enabled: true
           property-sources[0]:
             credential:
-              client-id: a013e5ab-4c56-47a7-90aa-48df6e54bd02
-              client-secret: sUI8Q~hCg0kH4yqkPGqlQQwvuIwZY-OU6tmPncf4
+              client-id: d4dbe9b4-e1f0-47a0-bbf7-7f8c8d1fec7f
+              client-secret: CTR8Q~heziBn8CQDqW22IfjZpI5CkL4oLgBXhc5u
             profile:
               tenant-id: 1972f4ea-4dbc-4475-8204-536e6cd8a3ec
             endpoint: https://appservice-webapi-vault.vault.azure.net/
