@@ -1,3 +1,4 @@
+
 spring:
   cloud:
     azure:
@@ -21,4 +22,5 @@ spring:
 azure:
   application-insights:
     instrumentation-key: ${appInsightInstrumentationKey}
+
 

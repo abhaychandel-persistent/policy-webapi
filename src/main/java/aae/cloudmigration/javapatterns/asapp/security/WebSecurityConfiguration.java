@@ -1,6 +1,8 @@
 package aae.cloudmigration.javapatterns.asapp.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,7 +12,11 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.DelegatingJwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 @EnableWebSecurity
@@ -19,8 +25,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http.authorizeRequests()
+        http.cors(Customizer.withDefaults()).authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer()
@@ -28,7 +33,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
                 .and()
                 .and();
-        // @formatter:on
     }
 
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
@@ -43,5 +47,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         roles.setAuthoritiesClaimName("roles");
         roles.setAuthorityPrefix("ROLE_");
         return new DelegatingJwtGrantedAuthoritiesConverter(scp, roles);
+    }
+
+    /*
+     * Here we integrate CORS filter with Spring Security which in turn excludes CORS preflight requests from
+     * being authenticated resulting in rejection(401) of request.
+     */
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(Arrays.asList("https://appservice-webapp-1072.azurewebsites.net", "http://localhost:4200"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

@@ -1,10 +1,13 @@
 
-CREATE SEQUENCE customer_id_seq;
+CREATE SEQUENCE policy_id_seq;
 
-CREATE TABLE customer
+CREATE TABLE policy
 (
     id       SERIAL,
-    first_name    varchar NOT NULL,
-    last_name     varchar NOT NULL,
-    CONSTRAINT employee_pk PRIMARY KEY (id)
+    policy_no       varchar NOT NULL,
+    policy_name     varchar NOT NULL,
+    description     varchar NOT NULL,
+    is_active       boolean NOT NULL,
+    type            varchar NOT NULL,
+    CONSTRAINT policy_pk PRIMARY KEY (id)
 );
