@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import aae.cloudmigration.javapatterns.asapp.policy.business.api.PolicyService;
@@ -23,7 +24,7 @@ public class PolicyRestServiceImpl implements PolicyRestService {
         this.policyService = policyService;
     }
 
-	public ResponseEntity<PolicyDto> createPolicy(PolicyDto policyDto) {
+	public ResponseEntity<PolicyDto> createPolicy(@RequestBody PolicyDto policyDto) {
 		LOGGER.info("Request received for creating policy " + policyDto.toString());
 		return ResponseEntity.ok(policyService.createPolicy(policyDto));
 	}

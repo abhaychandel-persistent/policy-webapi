@@ -6,7 +6,7 @@ public class PolicyDto {
     private String policyNo;
     private String policyName;
     private String description;
-    private Boolean isActive;
+    private boolean isActive;
     private String type;
 
     public PolicyDto() {

@@ -46,11 +46,18 @@ public class PolicyServiceImpl implements PolicyService {
      */
     public PolicyDto createPolicy(PolicyDto policyDto) {
         PolicyEntity policyEntity = policyRepository
-                .save(new PolicyEntity(policyDto.getPolicyNo(), policyDto.getPolicyName(), policyDto.getDescription(),
-                        policyDto.getActive(), policyDto.getType()));
+                .save(new PolicyEntity(getPolicyNo(), policyDto.getPolicyName(), policyDto.getDescription(),
+                        true, policyDto.getType()));
         LOGGER.info("Policy \"" + policyEntity.getPolicyNo() + " " + policyEntity.getPolicyName()
                 + "\" created successfully with Id " + policyEntity.getId());
         return mapPolicyEntityToDto(policyEntity);
+    }
+
+    private String getPolicyNo() {
+        int min = 11004;
+        int max = 11999;
+        int range = max - min + 1;
+        return "CH" + (int) ((Math.random() * range) + min);
     }
 
     /**
@@ -72,22 +79,21 @@ public class PolicyServiceImpl implements PolicyService {
         throw new PolicyNotFoundException("Policy with Id " + policyId + " not found.");
     }
 
+    @Override
+    public List<PolicyDto> getPolicyList() {
+        LOGGER.info("Project codeName: " + projectCodeName);
+        List<PolicyEntity> policyEntityList = policyRepository.findAll();
+        return policyEntityList.stream()
+                .map(entity -> mapPolicyEntityToDto(entity))
+                .collect(Collectors.toList());
+    }
+
     /*
      * Maps an Entity object to a Data Transfer Object
      */
     private PolicyDto mapPolicyEntityToDto(PolicyEntity policyEntity) {
         return new PolicyDto(String.valueOf(policyEntity.getId()), policyEntity.getPolicyNo(),
                 policyEntity.getPolicyName(), policyEntity.getDescription(), policyEntity.getActive(), policyEntity.getType());
-    }
-
-    @Override
-    public List<PolicyDto> getPolicyList() {
-        LOGGER.info("Project codeName: " + projectCodeName);
-        List<PolicyEntity> policyEntityList = policyRepository.findAll();
-        return policyEntityList.stream().map(
-                        entity -> new PolicyDto(String.valueOf(entity.getId()), entity.getPolicyNo(), entity.getPolicyName(),
-                                entity.getDescription(), entity.getActive(), entity.getType()))
-                .collect(Collectors.toList());
     }
 
 }

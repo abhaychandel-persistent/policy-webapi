@@ -1,5 +1,7 @@
 
 CREATE SEQUENCE policy_id_seq;
+ALTER SEQUENCE policy_id_seq RESTART WITH 11004;
+
 
 CREATE TABLE policy
 (
