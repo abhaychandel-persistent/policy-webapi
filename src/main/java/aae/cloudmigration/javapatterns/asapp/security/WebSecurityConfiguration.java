@@ -57,6 +57,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList("https://appservice-webapp-1072.azurewebsites.net", "http://localhost:4200"));
+        config.setAllowedHeaders(Arrays.asList("authorization", "Content-Type"));
+        config.setAllowedMethods(Arrays.asList("POST", "GET"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
